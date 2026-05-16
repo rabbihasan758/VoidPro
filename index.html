@@ -398,9 +398,9 @@ video{width:100%;display:block}
   <div class="footer-inner">
     <div class="f-line"></div>
     <div class="f-by">DEVELOPED BY</div>
-    <a class="rabbi-link" href="https://www.facebook.com/share/1DjeqJsTU7/" target="_blank" rel="noopener">
-      <div class="r-avatar">R</div>
-      <span class="r-name">RABBI HASAN</span>
+    <a class="rabbi-link" href="https://x.com/SpiderX5" target="_blank" rel="noopener">
+      <div class="r-avatar">S</div>
+      <span class="r-name">SpiderX</span>
     </a>
     <div class="f-copy">© 2025 VOID PRO &nbsp;·&nbsp; ALL RIGHTS RESERVED</div>
   </div>
@@ -452,124 +452,136 @@ function draw(){
 draw();
 
 /* DOWNLOADER */
-const PROXY='https://corsproxy.io/?';
-const apis={
-  tiktok:[
-    {n:'TikWM',u:u=>`https://tikwm.com/api/?url=${encodeURIComponent(u)}`,t:d=>d?.data?.play||d?.data?.hdplay||d?.data?.wmplay},
-    {n:'TiklyDown',u:u=>`https://api.tiklydown.eu.org/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.video?.noWatermark||d?.video?.watermark},
-    {n:'TikMate',u:u=>`https://www.tikmate.app/api/?url=${encodeURIComponent(u)}`,t:d=>d?.video?.noWatermark||d?.video?.watermark}
+const PROXY = 'https://corsproxy.io/?';
+
+// প্রতিটি প্ল্যাটফর্মের জন্য ৩টি করে শক্তিশালী API চেইন
+// API-Key লাগে না, সরাসরি কাজ করে।
+const apis = {
+  tiktok: [
+    { n: 'TikWM', u: u => `https://tikwm.com/api/?url=${encodeURIComponent(u)}`, t: d => d?.data?.play || d?.data?.hdplay || d?.data?.wmplay },
+    { n: 'TiklyDown', u: u => `https://api.tiklydown.eu.org/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'TikMate', u: u => `https://www.tikmate.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark }
   ],
-  instagram:[
-    {n:'IGDownloader',u:u=>`https://api.igdownloader.app/api/v1/instagram/download?url=${encodeURIComponent(u)}`,t:d=>d?.url?.[0]?.url||d?.url},
-    {n:'InstaSave',u:u=>`https://instasave.io/api/v1/download?url=${encodeURIComponent(u)}`,t:d=>d?.video_url||d?.url},
-    {n:'SnapInsta',u:u=>`https://snapinsta.app/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.video||d?.url}
+  instagram: [
+    { n: 'IGDownloader', u: u => `https://api.igdownloader.app/api/v1/instagram/download?url=${encodeURIComponent(u)}`, t: d => d?.url?.[0]?.url || d?.url },
+    { n: 'InstaSave', u: u => `https://instasave.io/api/v1/download?url=${encodeURIComponent(u)}`, t: d => d?.video_url || d?.url },
+    { n: 'SnapInsta', u: u => `https://snapinsta.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
   ],
-  facebook:[
-    {n:'FBDown',u:u=>`https://fbdownloader.app/api/?url=${encodeURIComponent(u)}`,t:d=>d?.hd||d?.sd||d?.url},
-    {n:'FBVideoAPI',u:u=>`https://fb-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.video||d?.url},
-    {n:'FBDownloader',u:u=>`https://fbdownloader.vercel.app/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.video||d?.url}
+  facebook: [
+    { n: 'FBDown', u: u => `https://fbdownloader.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.hd || d?.sd || d?.url },
+    { n: 'FBVideoAPI', u: u => `https://fb-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url },
+    { n: 'FBDownloader', u: u => `https://fbdownloader.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
   ],
-  twitter:[
-    {n:'TWDown',u:u=>`https://twdown.net/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.HD||d?.SD||d?.url},
-    {n:'TwitterVid',u:u=>`https://api.twittervideodownloader.com/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.video_url||d?.url},
-    {n:'TwitterDownloader',u:u=>`https://twitter-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.video||d?.url}
+  twitter: [
+    { n: 'TWDown', u: u => `https://twdown.net/api/download?url=${encodeURIComponent(u)}`, t: d => d?.HD || d?.SD || d?.url },
+    { n: 'TwitterVid', u: u => `https://api.twittervideodownloader.com/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video_url || d?.url },
+    { n: 'TwitterDL', u: u => `https://twitter-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
   ],
-  youtube:[
-    {n:'YtDlAPI',u:u=>`https://ytdl-api.vercel.app/api/download?url=${encodeURIComponent(u)}`,t:d=>d?.url||d?.video},
-    {n:'Y2Mate',u:u=>`https://y2mate-api.vercel.app/api/convert?url=${encodeURIComponent(u)}`,t:d=>d?.url||d?.video},
-    {n:'YouTubeMP4',u:u=>`https://youtube-mp4.download/api?url=${encodeURIComponent(u)}`,t:d=>d?.url||d?.video}
+  youtube: [
+    { n: 'YtDlAPI', u: u => `https://ytdl-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video },
+    { n: 'Y2Mate', u: u => `https://y2mate-api.vercel.app/api/convert?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video },
+    { n: 'YouTubeMP4', u: u => `https://youtube-mp4.download/api?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video }
   ]
 };
 
-function getPlatform(url){
-  if(/tiktok\.com/.test(url))return'tiktok';
-  if(/instagram\.com/.test(url))return'instagram';
-  if(/facebook\.com|fb\.watch|fb\.com/.test(url))return'facebook';
-  if(/twitter\.com|x\.com/.test(url))return'twitter';
-  if(/youtube\.com|youtu\.be/.test(url))return'youtube';
+function getPlatform(url) {
+  if (/tiktok\.com/.test(url)) return 'tiktok';
+  if (/instagram\.com/.test(url)) return 'instagram';
+  if (/facebook\.com|fb\.watch|fb\.com/.test(url)) return 'facebook';
+  if (/twitter\.com|x\.com/.test(url)) return 'twitter';
+  if (/youtube\.com|youtu\.be/.test(url)) return 'youtube';
   return null;
 }
 
-async function getJSON(url){
-  try{const r=await fetch(url);if(!r.ok)throw 0;return await r.json()}
-  catch{const r=await fetch(PROXY+encodeURIComponent(url));if(!r.ok)throw new Error();return await r.json()}
+async function getJSON(url) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error();
+    return await r.json();
+  } catch {
+    const r = await fetch(PROXY + encodeURIComponent(url));
+    if (!r.ok) throw new Error();
+    return await r.json();
+  }
 }
 
-const $=id=>document.getElementById(id);
-const urlIn=$('urlInput'),fetchBtn=$('fetchBtn');
-const spin=$('spinner'),sTxt=$('sTxt'),sDot=$('sDot'),errBar=$('errBar');
-const resultBox=$('resultBox'),platChip=$('platChip'),videoEl=$('videoEl');
-const dlBtn=$('dlBtn'),copyBtn=$('copyBtn');
-const cmap={tiktok:'ttCard',instagram:'igCard',facebook:'fbCard',twitter:'xCard',youtube:'ytCard'};
+const $ = id => document.getElementById(id);
+const urlIn = $('urlInput'), fetchBtn = $('fetchBtn');
+const spin = $('spinner'), sTxt = $('sTxt'), sDot = $('sDot'), errBar = $('errBar');
+const resultBox = $('resultBox'), platChip = $('platChip'), videoEl = $('videoEl');
+const dlBtn = $('dlBtn'), copyBtn = $('copyBtn');
+const cmap = { tiktok: 'ttCard', instagram: 'igCard', facebook: 'fbCard', twitter: 'xCard', youtube: 'ytCard' };
 
-let currentVideoUrl='';
+let currentVideoUrl = '';
 
-function setSt(msg,state='idle'){
-  sTxt.textContent=msg;
-  sDot.className='s-dot'+(state==='run'?' run':state==='err'?' err':'');
-  spin.style.display=state==='run'?'block':'none';
-  errBar.style.display='none';
+function setSt(msg, state = 'idle') {
+  sTxt.textContent = msg;
+  sDot.className = 's-dot' + (state === 'run' ? ' run' : state === 'err' ? ' err' : '');
+  spin.style.display = state === 'run' ? 'block' : 'none';
+  errBar.style.display = 'none';
 }
-function setErr(msg){errBar.textContent='⚠  '+msg;errBar.style.display='block';setSt('Failed','err')}
-function highlight(p){document.querySelectorAll('.pcard').forEach(c=>c.classList.remove('active'));if(p&&cmap[p])$(cmap[p]).classList.add('active')}
+function setErr(msg) { errBar.textContent = '⚠  ' + msg; errBar.style.display = 'block'; setSt('Failed', 'err'); }
+function highlight(p) { document.querySelectorAll('.pcard').forEach(c => c.classList.remove('active')); if (p && cmap[p]) $(cmap[p]).classList.add('active'); }
 
-function forceDownload(url, filename='video.mp4'){
-  const a=document.createElement('a');
-  a.href=url;
-  a.download=filename;
+// সরাসরি ডাউনলোড ফাংশন (জোর করে ফাইল সেভ করবে)
+function forceDownload(url, filename = 'video.mp4') {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
 }
 
-async function run(){
-  const url=urlIn.value.trim();
-  if(!url){setErr('Please paste a valid video URL first');return}
-  const plat=getPlatform(url);
-  if(!plat){setErr('Unsupported platform. Try TikTok, Instagram, Facebook, X or YouTube');return}
-  resultBox.style.display='none';
+async function run() {
+  const url = urlIn.value.trim();
+  if (!url) { setErr('Please paste a valid video URL first'); return; }
+  const plat = getPlatform(url);
+  if (!plat) { setErr('Unsupported platform. Try TikTok, Instagram, Facebook, X or YouTube'); return; }
+  resultBox.style.display = 'none';
   highlight(plat);
-  const chain=apis[plat];
-  let finalUrl='';
-  for(let i=0;i<chain.length;i++){
-    const api=chain[i];
-    setSt(`Connecting to ${api.n}... (${i+1}/${chain.length})`,'run');
-    try{
-      const data=await getJSON(api.u(url));
-      const ex=api.t(data);
-      if(ex&&typeof ex==='string'&&ex.startsWith('http')){finalUrl=ex;setSt(`✓ Extracted via ${api.n}`);break}
+  const chain = apis[plat];
+  let finalUrl = '';
+  for (let i = 0; i < chain.length; i++) {
+    const api = chain[i];
+    setSt(`Connecting to ${api.n}... (${i + 1}/${chain.length})`, 'run');
+    try {
+      const data = await getJSON(api.u(url));
+      const ex = api.t(data);
+      if (ex && typeof ex === 'string' && ex.startsWith('http')) { finalUrl = ex; setSt(`✓ Extracted via ${api.n}`); break; }
       throw new Error();
-    }catch{if(i===chain.length-1)setErr('All sources exhausted — video may be private or unavailable')}
+    } catch { if (i === chain.length - 1) setErr('All sources exhausted — video may be private or unavailable'); }
   }
-  if(finalUrl){
-    currentVideoUrl=finalUrl;
-    platChip.textContent=plat.toUpperCase();
-    videoEl.src=finalUrl;
-    resultBox.style.display='block';
-    resultBox.scrollIntoView({behavior:'smooth',block:'nearest'});
+  if (finalUrl) {
+    currentVideoUrl = finalUrl;
+    platChip.textContent = plat.toUpperCase();
+    videoEl.src = finalUrl;
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
-fetchBtn.addEventListener('click',run);
-urlIn.addEventListener('keydown',e=>{if(e.key==='Enter')run()});
+fetchBtn.addEventListener('click', run);
+urlIn.addEventListener('keydown', e => { if (e.key === 'Enter') run(); });
 
-dlBtn.addEventListener('click',()=>{
-  if(currentVideoUrl) forceDownload(currentVideoUrl);
+// এখন "DOWNLOAD FILE" বাটন সরাসরি ডাউনলোড করবে
+dlBtn.addEventListener('click', () => {
+  if (currentVideoUrl) forceDownload(currentVideoUrl);
 });
 
-copyBtn.addEventListener('click',()=>{
-  if(!currentVideoUrl)return;
-  navigator.clipboard.writeText(currentVideoUrl).then(()=>{
-    copyBtn.innerHTML=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> COPIED!`;
-    setTimeout(()=>{copyBtn.innerHTML=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> COPY LINK`},2500);
+copyBtn.addEventListener('click', () => {
+  if (!currentVideoUrl) return;
+  navigator.clipboard.writeText(currentVideoUrl).then(() => {
+    copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> COPIED!`;
+    setTimeout(() => { copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> COPY LINK`}, 2500);
   });
 });
 
-urlIn.addEventListener('input',()=>{
-  resultBox.style.display='none';errBar.style.display='none';
-  sTxt.textContent='Ready — paste a URL and hit Download';
-  sDot.className='s-dot';document.querySelectorAll('.pcard').forEach(c=>c.classList.remove('active'));
-  currentVideoUrl='';
+urlIn.addEventListener('input', () => {
+  resultBox.style.display = 'none'; errBar.style.display = 'none';
+  sTxt.textContent = 'Ready — paste a URL and hit Download';
+  sDot.className = 's-dot'; document.querySelectorAll('.pcard').forEach(c => c.classList.remove('active'));
+  currentVideoUrl = '';
 });
 })();
 </script>
