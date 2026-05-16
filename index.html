@@ -453,26 +453,33 @@ draw();
 
 /* DOWNLOADER */
 const PROXY='https://corsproxy.io/?';
-const TELEGRAM_API = 'https://telegram-video-api-0jiv.onrender.com/api/download'; // আপনার নতুন Render URL
 
+// ========== পাবলিক API চেইন (কোনো Render সার্ভার লাগবে না) ==========
 const apis = {
   tiktok: [
     { n: 'TikWM', u: u => `https://tikwm.com/api/?url=${encodeURIComponent(u)}`, t: d => d?.data?.play || d?.data?.hdplay || d?.data?.wmplay },
     { n: 'TiklyDown', u: u => `https://api.tiklydown.eu.org/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
-    { n: 'TikMate', u: u => `https://www.tikmate.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
-    { n: 'Telegram', u: u => `${TELEGRAM_API}?url=${encodeURIComponent(u)}&platform=tiktok`, t: d => d?.videoUrl }
+    { n: 'TikMate', u: u => `https://www.tikmate.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark }
   ],
   instagram: [
-    { n: 'Telegram', u: u => `${TELEGRAM_API}?url=${encodeURIComponent(u)}&platform=instagram`, t: d => d?.videoUrl }
+    { n: 'IGDownloader', u: u => `https://api.igdownloader.app/api/v1/instagram/download?url=${encodeURIComponent(u)}`, t: d => d?.url?.[0]?.url || d?.url },
+    { n: 'InstaSave', u: u => `https://instasave.io/api/v1/download?url=${encodeURIComponent(u)}`, t: d => d?.video_url || d?.url },
+    { n: 'SnapInsta', u: u => `https://snapinsta.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
   ],
   facebook: [
-    { n: 'Telegram', u: u => `${TELEGRAM_API}?url=${encodeURIComponent(u)}&platform=facebook`, t: d => d?.videoUrl }
+    { n: 'FBDown', u: u => `https://fbdownloader.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.hd || d?.sd || d?.url },
+    { n: 'FBVideoAPI', u: u => `https://fb-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url },
+    { n: 'FBDownloader', u: u => `https://fbdownloader.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
   ],
   twitter: [
-    { n: 'Telegram', u: u => `${TELEGRAM_API}?url=${encodeURIComponent(u)}&platform=twitter`, t: d => d?.videoUrl }
+    { n: 'TWDown', u: u => `https://twdown.net/api/download?url=${encodeURIComponent(u)}`, t: d => d?.HD || d?.SD || d?.url },
+    { n: 'TwitterVid', u: u => `https://api.twittervideodownloader.com/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video_url || d?.url },
+    { n: 'TwitterDL', u: u => `https://twitter-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
   ],
   youtube: [
-    { n: 'Telegram', u: u => `${TELEGRAM_API}?url=${encodeURIComponent(u)}&platform=youtube`, t: d => d?.videoUrl }
+    { n: 'YtDlAPI', u: u => `https://ytdl-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video },
+    { n: 'Y2Mate', u: u => `https://y2mate-api.vercel.app/api/convert?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video },
+    { n: 'YouTubeMP4', u: u => `https://youtube-mp4.download/api?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video }
   ]
 };
 
@@ -486,8 +493,16 @@ function getPlatform(url){
 }
 
 async function getJSON(url){
-  try{const r=await fetch(url);if(!r.ok)throw 0;return await r.json()}
-  catch{const r=await fetch(PROXY+encodeURIComponent(url));if(!r.ok)throw new Error();return await r.json()}
+  // প্রথমে সরাসরি fetch, CORS ব্লক হলে corsproxy.io দিয়ে ট্রাই
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('Failed');
+    return await r.json();
+  } catch(e) {
+    const r = await fetch(PROXY + encodeURIComponent(url));
+    if (!r.ok) throw new Error('CORS proxy failed');
+    return await r.json();
+  }
 }
 
 const $=id=>document.getElementById(id);
@@ -533,8 +548,8 @@ async function run(){
       const data=await getJSON(api.u(url));
       const ex=api.t(data);
       if(ex&&typeof ex==='string'&&ex.startsWith('http')){finalUrl=ex;setSt(`✓ Extracted via ${api.n}`);break}
-      throw new Error();
-    }catch{if(i===chain.length-1)setErr('All sources exhausted — video may be private or unavailable')}
+      throw new Error('No valid video URL');
+    }catch(e){if(i===chain.length-1)setErr('All sources exhausted — video may be private or unavailable')}
   }
   if(finalUrl){
     currentVideoUrl=finalUrl;
