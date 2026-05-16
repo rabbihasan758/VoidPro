@@ -402,7 +402,7 @@ video{width:100%;display:block}
       <div class="r-avatar">R</div>
       <span class="r-name">RABBI HASAN</span>
     </a>
-    <div class="f-copy">© 2025 VOID PRO &nbsp;·&nbsp; ALL RIGHTS RESERVED</div>
+    <div class="f-copy">© 2026 VOID PRO &nbsp;·&nbsp; ALL RIGHTS RESERVED</div>
   </div>
 </div>
 
@@ -493,7 +493,6 @@ function getPlatform(url){
 }
 
 async function getJSON(url){
-  // প্রথমে সরাসরি fetch, CORS ব্লক হলে corsproxy.io দিয়ে ট্রাই
   try {
     const r = await fetch(url);
     if (!r.ok) throw new Error('Failed');
