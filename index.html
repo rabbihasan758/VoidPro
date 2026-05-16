@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VOID DOCK — Universal Media Extractor</title>
+<title>VOID DOCK — TikTok Downloader</title>
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -149,13 +149,13 @@ input[type=text]:focus{
 .s-txt{font-family:var(--mono);font-size:12.5px;color:var(--text2);flex:1;letter-spacing:0.3px}
 .err-bar{display:none;padding:12px 18px;background:rgba(255,60,60,0.07);border:1px solid rgba(255,60,60,0.2);border-radius:12px;font-family:var(--mono);font-size:12px;color:#ff7070;position:relative;z-index:1}
 
-/* PLATFORMS */
+/* PLATFORM CARD */
 .plat-lbl{
   font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:3px;
   margin:22px 0 12px;display:flex;align-items:center;gap:10px;position:relative;z-index:1;
 }
 .plat-lbl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.06),transparent)}
-.plat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;position:relative;z-index:1}
+.plat-grid{display:grid;grid-template-columns:1fr;gap:10px;position:relative;z-index:1; max-width:300px; margin:0 auto;}
 
 .pcard{
   background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);
@@ -177,10 +177,6 @@ input[type=text]:focus{
 .odot{width:4px;height:4px;background:var(--accent4);border-radius:50%;box-shadow:0 0 5px var(--accent4)}
 
 .bg-tt{background:rgba(254,44,85,0.12)}
-.bg-ig{background:linear-gradient(135deg,rgba(64,93,230,0.12),rgba(225,48,108,0.12),rgba(252,175,69,0.12))}
-.bg-fb{background:rgba(24,119,242,0.12)}
-.bg-x{background:rgba(255,255,255,0.06)}
-.bg-yt{background:rgba(255,0,0,0.12)}
 
 /* RESULT */
 .result-box{
@@ -244,7 +240,7 @@ video{width:100%;display:block}
   .hero{padding:32px 20px 28px}
   .inp-row{flex-direction:column}
   .dl-btn{width:100%;justify-content:center}
-  .plat-grid{grid-template-columns:repeat(3,1fr)}
+  .plat-grid{grid-template-columns:1fr}
   .act-row{flex-direction:column;padding:0 18px 18px}
   .vid-wrap{margin:16px 18px}
   .r-head{padding:15px 18px}
@@ -269,13 +265,13 @@ video{width:100%;display:block}
 <!-- HERO -->
 <div class="hero">
   <div class="header">
-    <div class="header-tag"><div class="tag-dot"></div>UNIVERSAL MEDIA EXTRACTOR</div>
+    <div class="header-tag"><div class="tag-dot"></div>TIKTOK VIDEO EXTRACTOR</div>
     <div class="title-wrap"><span class="t-void">VOID</span><span class="t-pro">DOCK</span></div>
     <div class="header-sub">REMOVE WATERMARK &nbsp;·&nbsp; HD QUALITY &nbsp;·&nbsp; INSTANT DOWNLOAD</div>
   </div>
 
   <div class="inp-section">
-    <div class="inp-label">PASTE VIDEO URL</div>
+    <div class="inp-label">PASTE TIKTOK URL</div>
     <div class="inp-row">
       <div class="inp-wrap">
         <input type="text" id="urlInput" placeholder="https://www.tiktok.com/@..." autocomplete="off" spellcheck="false">
@@ -295,14 +291,13 @@ video{width:100%;display:block}
   <div class="status-wrap">
     <div class="s-dot" id="sDot"></div>
     <div class="spinner" id="spinner"></div>
-    <span class="s-txt" id="sTxt">Ready — paste a URL and hit Download</span>
+    <span class="s-txt" id="sTxt">Ready — paste a TikTok link and hit Download</span>
   </div>
   <div class="err-bar" id="errBar"></div>
 
-  <div class="plat-lbl">SUPPORTED PLATFORMS</div>
+  <div class="plat-lbl">SUPPORTED PLATFORM</div>
   <div class="plat-grid">
-
-    <!-- TIKTOK -->
+    <!-- TIKTOK ONLY -->
     <div class="pcard" id="ttCard">
       <div class="icon-wrap bg-tt">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -314,63 +309,6 @@ video{width:100%;display:block}
       <div class="pname">TikTok</div>
       <div class="obadge"><div class="odot"></div>Live</div>
     </div>
-
-    <!-- INSTAGRAM -->
-    <div class="pcard" id="igCard">
-      <div class="icon-wrap bg-ig">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="ig1" cx="30%" cy="107%" r="145%">
-              <stop offset="0%" stop-color="#fdf497"/>
-              <stop offset="5%" stop-color="#fdf497"/>
-              <stop offset="45%" stop-color="#fd5949"/>
-              <stop offset="60%" stop-color="#d6249f"/>
-              <stop offset="90%" stop-color="#285AEB"/>
-            </radialGradient>
-          </defs>
-          <path fill="url(#ig1)" d="M16 2.88c3.5 0 3.92.01 5.29.08 3.56.16 5.23 1.85 5.39 5.39.07 1.37.08 1.79.08 5.29s-.01 3.92-.08 5.29c-.16 3.53-1.82 5.23-5.39 5.39-1.37.07-1.78.08-5.29.08-3.5 0-3.92-.01-5.29-.08-3.57-.16-5.23-1.86-5.39-5.39C5.25 19.56 5.24 19.14 5.24 16c0-3.5.01-3.92.08-5.29C5.48 7.18 7.14 5.04 10.71 4.88 12.08 4.81 12.5 4.88 16 4.88zm0-2.88c-3.56 0-4.01.02-5.41.08C5.62.24 2.08 3.77 2.08 8.59 2 9.99 2 10.44 2 16c0 5.56.02 6.01.08 7.41.16 4.82 3.69 8.35 8.51 8.51C11.99 31.98 12.44 32 16 32c3.56 0 4.01-.02 5.41-.08 4.82-.16 8.35-3.69 8.51-8.51C29.98 22.01 30 21.56 30 16c0-5.56-.02-6.01-.08-7.41C29.76 3.77 26.23.24 21.41.08 20.01.02 19.56 0 16 0zm0 7.78a8.22 8.22 0 1 0 0 16.44A8.22 8.22 0 0 0 16 7.78zm0 13.56a5.34 5.34 0 1 1 0-10.68 5.34 5.34 0 0 1 0 10.68zm8.54-13.88a1.92 1.92 0 1 1-3.84 0 1.92 1.92 0 0 1 3.84 0z"/>
-        </svg>
-      </div>
-      <div class="pname">Instagram</div>
-      <div class="obadge"><div class="odot"></div>Live</div>
-    </div>
-
-    <!-- FACEBOOK -->
-    <div class="pcard" id="fbCard">
-      <div class="icon-wrap bg-fb">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#1877F2" d="M32 16C32 7.163 24.837 0 16 0S0 7.163 0 16c0 7.986 5.851 14.605 13.5 15.806V20.625H9.438V16H13.5v-3.525c0-4.01 2.389-6.225 6.043-6.225 1.75 0 3.582.313 3.582.313V10.5h-2.018c-1.988 0-2.607 1.233-2.607 2.497V16h4.438l-.709 4.625H18.5v11.181C26.149 30.605 32 23.986 32 16z"/>
-          <path fill="white" d="M22.229 20.625L22.938 16H18.5v-2.944c0-1.264.619-2.497 2.607-2.497h2.018V6.563s-1.831-.313-3.582-.313c-3.654 0-6.043 2.215-6.043 6.225V16H9.438v4.625H13.5v11.181a16.12 16.12 0 0 0 5 0V20.625h3.729z"/>
-        </svg>
-      </div>
-      <div class="pname">Facebook</div>
-      <div class="obadge"><div class="odot"></div>Live</div>
-    </div>
-
-    <!-- X / TWITTER -->
-    <div class="pcard" id="xCard">
-      <div class="icon-wrap bg-x">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <rect width="32" height="32" rx="6" fill="#000"/>
-          <path fill="white" d="M24.325 3.5h3.944L19.84 13.478 29.75 28.5h-8.37l-6.283-8.313L8.018 28.5H4.072l9.008-10.446L3.25 3.5h8.577l5.678 7.608L24.325 3.5zm-1.385 22.5h2.185L9.17 5.73H6.826L22.94 26z"/>
-        </svg>
-      </div>
-      <div class="pname">X / Twitter</div>
-      <div class="obadge"><div class="odot"></div>Live</div>
-    </div>
-
-    <!-- YOUTUBE -->
-    <div class="pcard" id="ytCard">
-      <div class="icon-wrap bg-yt">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path fill="#FF0000" d="M31.33 8.22a4.02 4.02 0 0 0-2.83-2.85C25.88 4.67 16 4.67 16 4.67s-9.88 0-12.5.7A4.02 4.02 0 0 0 .67 8.22C0 10.86 0 16.33 0 16.33s0 5.47.67 8.11a4.02 4.02 0 0 0 2.83 2.85c2.62.7 12.5.7 12.5.7s9.88 0 12.5-.7a4.02 4.02 0 0 0 2.83-2.85C32 21.8 32 16.33 32 16.33s0-5.47-.67-8.11z"/>
-          <path fill="white" d="M12.73 20.73l8.36-4.4-8.36-4.4v8.8z"/>
-        </svg>
-      </div>
-      <div class="pname">YouTube</div>
-      <div class="obadge"><div class="odot"></div>Live</div>
-    </div>
-
   </div>
 </div><!-- /hero -->
 
@@ -402,7 +340,7 @@ video{width:100%;display:block}
       <div class="r-avatar">R</div>
       <span class="r-name">RABBI HASAN</span>
     </a>
-    <div class="f-copy">© 2026 VOID PRO &nbsp;·&nbsp; ALL RIGHTS RESERVED</div>
+    <div class="f-copy">© 2025 VOID PRO &nbsp;·&nbsp; ALL RIGHTS RESERVED</div>
   </div>
 </div>
 
@@ -451,51 +389,35 @@ function draw(){
 }
 draw();
 
-/* DOWNLOADER */
+/* DOWNLOADER – TIKTOK ONLY (12 APIs) */
 const PROXY='https://corsproxy.io/?';
 
-// ========== পাবলিক API চেইন (কোনো Render সার্ভার লাগবে না) ==========
 const apis = {
   tiktok: [
     { n: 'TikWM', u: u => `https://tikwm.com/api/?url=${encodeURIComponent(u)}`, t: d => d?.data?.play || d?.data?.hdplay || d?.data?.wmplay },
     { n: 'TiklyDown', u: u => `https://api.tiklydown.eu.org/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
-    { n: 'TikMate', u: u => `https://www.tikmate.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark }
-  ],
-  instagram: [
-    { n: 'IGDownloader', u: u => `https://api.igdownloader.app/api/v1/instagram/download?url=${encodeURIComponent(u)}`, t: d => d?.url?.[0]?.url || d?.url },
-    { n: 'InstaSave', u: u => `https://instasave.io/api/v1/download?url=${encodeURIComponent(u)}`, t: d => d?.video_url || d?.url },
-    { n: 'SnapInsta', u: u => `https://snapinsta.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
-  ],
-  facebook: [
-    { n: 'FBDown', u: u => `https://fbdownloader.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.hd || d?.sd || d?.url },
-    { n: 'FBVideoAPI', u: u => `https://fb-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url },
-    { n: 'FBDownloader', u: u => `https://fbdownloader.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
-  ],
-  twitter: [
-    { n: 'TWDown', u: u => `https://twdown.net/api/download?url=${encodeURIComponent(u)}`, t: d => d?.HD || d?.SD || d?.url },
-    { n: 'TwitterVid', u: u => `https://api.twittervideodownloader.com/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video_url || d?.url },
-    { n: 'TwitterDL', u: u => `https://twitter-video-downloader-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video || d?.url }
-  ],
-  youtube: [
-    { n: 'YtDlAPI', u: u => `https://ytdl-api.vercel.app/api/download?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video },
-    { n: 'Y2Mate', u: u => `https://y2mate-api.vercel.app/api/convert?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video },
-    { n: 'YouTubeMP4', u: u => `https://youtube-mp4.download/api?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video }
+    { n: 'TikMate', u: u => `https://www.tikmate.app/api/?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'TikCDN', u: u => `https://tikcdn.io/api/v1/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'SaveTik', u: u => `https://savetik.co/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'SSSTik', u: u => `https://ssstik.io/abc?url=dl`, t: d => d?.video?.playAddr || d?.video || d?.url },
+    { n: 'SnapTik', u: u => `https://snaptik.app/action?url=${encodeURIComponent(u)}`, t: d => d?.url || d?.video || d?.data?.play },
+    { n: 'LoveTik', u: u => `https://lovetik.com/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'TikBuddy', u: u => `https://tikbuddy.com/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'MusicallyDown', u: u => `https://musicallydown.com/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'TTDown', u: u => `https://ttdown.org/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark },
+    { n: 'TokVideo', u: u => `https://tokvideo.org/api/download?url=${encodeURIComponent(u)}`, t: d => d?.video?.noWatermark || d?.video?.watermark }
   ]
 };
 
 function getPlatform(url){
   if(/tiktok\.com/.test(url))return'tiktok';
-  if(/instagram\.com/.test(url))return'instagram';
-  if(/facebook\.com|fb\.watch|fb\.com/.test(url))return'facebook';
-  if(/twitter\.com|x\.com/.test(url))return'twitter';
-  if(/youtube\.com|youtu\.be/.test(url))return'youtube';
   return null;
 }
 
 async function getJSON(url){
   try {
     const r = await fetch(url);
-    if (!r.ok) throw new Error('Failed');
+    if (!r.ok) throw new Error('Direct failed');
     return await r.json();
   } catch(e) {
     const r = await fetch(PROXY + encodeURIComponent(url));
@@ -509,7 +431,7 @@ const urlIn=$('urlInput'),fetchBtn=$('fetchBtn');
 const spin=$('spinner'),sTxt=$('sTxt'),sDot=$('sDot'),errBar=$('errBar');
 const resultBox=$('resultBox'),platChip=$('platChip'),videoEl=$('videoEl');
 const dlBtn=$('dlBtn'),copyBtn=$('copyBtn');
-const cmap={tiktok:'ttCard',instagram:'igCard',facebook:'fbCard',twitter:'xCard',youtube:'ytCard'};
+const cmap={tiktok:'ttCard'};
 
 let currentVideoUrl='';
 
@@ -533,9 +455,9 @@ function forceDownload(url, filename='video.mp4'){
 
 async function run(){
   const url=urlIn.value.trim();
-  if(!url){setErr('Please paste a valid video URL first');return}
+  if(!url){setErr('Please paste a valid TikTok URL first');return}
   const plat=getPlatform(url);
-  if(!plat){setErr('Unsupported platform. Try TikTok, Instagram, Facebook, X or YouTube');return}
+  if(!plat){setErr('Only TikTok links are supported');return}
   resultBox.style.display='none';
   highlight(plat);
   const chain=apis[plat];
@@ -552,7 +474,7 @@ async function run(){
   }
   if(finalUrl){
     currentVideoUrl=finalUrl;
-    platChip.textContent=plat.toUpperCase();
+    platChip.textContent='TIKTOK';
     videoEl.src=finalUrl;
     resultBox.style.display='block';
     resultBox.scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -576,7 +498,7 @@ copyBtn.addEventListener('click',()=>{
 
 urlIn.addEventListener('input',()=>{
   resultBox.style.display='none';errBar.style.display='none';
-  sTxt.textContent='Ready — paste a URL and hit Download';
+  sTxt.textContent='Ready — paste a TikTok link and hit Download';
   sDot.className='s-dot';document.querySelectorAll('.pcard').forEach(c=>c.classList.remove('active'));
   currentVideoUrl='';
 });
